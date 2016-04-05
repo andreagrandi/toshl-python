@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from toshl.client import ToshlClient
 import mock
 from unittest import TestCase
@@ -18,7 +19,7 @@ class TestClient(TestCase):
         assert base_api_url is not None
 
     @mock.patch('toshl.client.requests.request')
-    def test_client_can_make_get_request(self, mock_request):
+    def test_client_can_make_request(self, mock_request):
         mock_request.return_value = self.success_mocked_response
         client = ToshlClient('abcd1234')
         client._make_request('/me', 'GET')
@@ -27,13 +28,24 @@ class TestClient(TestCase):
             method='GET', params=None, url='https://api.toshl.com/me')
 
     @mock.patch('toshl.client.requests.request')
-    def test_client_can_make_get_request_with_params(self, mock_request):
+    def test_client_can_make_request_with_params(self, mock_request):
         mock_request.return_value = self.success_mocked_response
         client = ToshlClient('abcd1234')
         client._make_request('/me', 'GET', params={'a': 'foo1', 'b': 'foo2'})
         mock_request.assert_called_once_with(
             headers={'Authorization': 'Bearer abcd1234'},
             method='GET', params={'a': 'foo1', 'b': 'foo2'},
+            url='https://api.toshl.com/me')
+
+    @mock.patch('toshl.client.requests.request')
+    def test_client_can_make_request_with_utf8_params(self, mock_request):
+        mock_request.return_value = self.success_mocked_response
+        client = ToshlClient('abcd1234')
+        client._make_request(
+            '/me', 'GET', params={'a': u'foo1', 'b': u'£123'})
+        mock_request.assert_called_once_with(
+            headers={'Authorization': 'Bearer abcd1234'},
+            method='GET', params={'a': u'foo1', 'b': u'\xa3123'},
             url='https://api.toshl.com/me')
 
     @mock.patch('toshl.client.requests.request')
