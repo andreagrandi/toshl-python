@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from toshl.client import ToshlClient
 import mock
 from unittest import TestCase
+from toshl.client import ToshlClient
+from toshl.exceptions import ToshlException
 
 
 class TestClient(TestCase):
@@ -55,3 +56,65 @@ class TestClient(TestCase):
         client._make_request('/me', 'GET', params={'a': 'foo1', 'b': 'foo2'})
         assert mock_request.call_args[1]['headers']['Authorization'] == \
             'Bearer AAABBBCCCDDD'
+
+    @mock.patch('toshl.client.requests.request')
+    def test_client_request_raises_exception_on_400(self, mock_request):
+        mock_response = mock.Mock()
+        expected_dict = {
+            'id': 'exception_id',
+            'description': 'Exception description'
+        }
+        mock_response.json.return_value = expected_dict
+        mock_response.status_code = 400
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+
+        with self.assertRaises(ToshlException) as ex:
+            client._make_request('/me', 'GET')
+
+        assert ex.exception.status_code == 400
+        assert ex.exception.error_id == 'exception_id'
+        assert ex.exception.error_description == 'Exception description'
+        assert ex.exception.extra_info is None
+
+    @mock.patch('toshl.client.requests.request')
+    def test_client_request_raises_exception_with_extra_info(
+            self, mock_request):
+        mock_response = mock.Mock()
+        expected_dict = {
+            'id': 'exception_id',
+            'description': 'Exception description',
+            "fields": [
+                {
+                    "field": "amount",
+                    "error": "Amount cannot be zero."
+                },
+                {
+                    "field": "category",
+                    "error": "Please select at least one category."
+                }
+            ]
+        }
+        mock_response.json.return_value = expected_dict
+        mock_response.status_code = 400
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+
+        with self.assertRaises(ToshlException) as ex:
+            client._make_request('/me', 'GET')
+
+        assert ex.exception.status_code == 400
+        assert ex.exception.error_id == 'exception_id'
+        assert ex.exception.error_description == 'Exception description'
+        assert ex.exception.extra_info == [
+            {
+                "field": "amount",
+                "error": "Amount cannot be zero."
+            },
+            {
+                "field": "category",
+                "error": "Please select at least one category."
+            }
+        ]
