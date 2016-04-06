@@ -70,7 +70,7 @@ class TestAccount(TestCase):
 
         client = ToshlClient('abcd1234')
         account = Account(client)
-        account_found = account.search_account('Test Found')
+        account_found = account.search('Test Found')
 
         mock_request.assert_called_once_with(
             headers={'Authorization': 'Bearer abcd1234'},
@@ -93,7 +93,7 @@ class TestAccount(TestCase):
 
         client = ToshlClient('abcd1234')
         account = Account(client)
-        account_found = account.search_account('Test Found')
+        account_found = account.search('Test Found')
 
         mock_request.assert_called_once_with(
             headers={'Authorization': 'Bearer abcd1234'},
@@ -116,7 +116,7 @@ class TestAccount(TestCase):
 
         client = ToshlClient('abcd1234')
         account = Account(client)
-        account_found = account.search_account('Not Found')
+        account_found = account.search('Not Found')
 
         mock_request.assert_called_once_with(
             headers={'Authorization': 'Bearer abcd1234'},

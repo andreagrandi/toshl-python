@@ -60,7 +60,7 @@ class Account(object):
         response = response.json()
         return self.client._list_response(response)
 
-    def search_account(self, account_name):
+    def search(self, account_name):
         accounts = self.list()
         for a in accounts:
             if a['name'] == account_name:
