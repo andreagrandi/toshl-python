@@ -1,4 +1,7 @@
-# toshl-python
+# toshl-python ![License MIT](https://go-shields.herokuapp.com/license-MIT-blue.png)
+
+[![Travis-CI Status](https://secure.travis-ci.org/andreagrandi/toshl-python.png?branch=master)](http://travis-ci.org/#!/andreagrandi/toshl-python)
+
 Python client library for Toshl API
 
 ## Copyright Note
