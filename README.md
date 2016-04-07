@@ -27,6 +27,8 @@ To use each resource you will need to create an instance of them, passing the cl
 
 **Note:** at the moment not all the methods and not all the resources have been implemented.
 
+Here you can find a couple of examples, but for the complete documentation you can have a look at the official website https://developer.toshl.com/docs/
+
 ### Accounts
 
 ```
