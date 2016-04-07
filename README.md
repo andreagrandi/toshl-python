@@ -59,6 +59,28 @@ category.list()
 category.search('Test Category')
 ```
 
+### Entries
+
+```
+from toshl.client import ToshlClient, Entry
+
+client = ToshlClient('xxx-xxxxx-xxx-xxxxxx-xxxxxx-xxx-xxxxxx')
+entry = Entry(client)
+
+# create an Entry
+json_payload = {
+    'amount': -123.68,
+    'currency': {
+        'code': 'GBP'
+    },
+    'date': '2016-04-07',
+    'account': 'abcd1234',
+    'category': 'category-001'
+}
+
+response = entry.create(json_payload)
+```
+
 ## Copyright Note
 **Toshl** and its logos, design, text, graphics, and other files, and the selection arrangement and organization thereof, are owned by Toshl.
 This is a 3rd party code and I'm not affiliated nor I work for Toshl.
