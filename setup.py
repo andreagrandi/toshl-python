@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='toshl',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/andreagrandi/toshl-python',
-    download_url='https://github.com/andreagrandi/toshl-python/tarball/0.0.1',
+    download_url='https://github.com/andreagrandi/toshl-python/tarball/0.0.2',
     author='Andrea Grandi',
     author_email='a.grandi@gmail.com',
     description='Python client library for Toshl API.',
