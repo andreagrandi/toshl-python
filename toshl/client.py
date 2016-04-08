@@ -9,7 +9,7 @@ class ToshlClient(object):
         self._token = token
 
     def _make_request(
-            self, api_resource, method='GET', params=None, *args, **kwargs):
+            self, api_resource, method='GET', params=None, **kwargs):
         """
         Shortcut for a generic request to the Toshl API
         :param url: The URL resource part
@@ -17,12 +17,20 @@ class ToshlClient(object):
         :param parameters: Querystring parameters
         :return: requests.Response
         """
+        if kwargs.get('json'):
+            headers = {
+                'Authorization': 'Bearer {}'.format(self._token),
+                'Content-Type': 'application/json'
+            }
+        else:
+            headers = {
+                'Authorization': 'Bearer {}'.format(self._token)
+            }
+
         response = requests.request(
             method=method,
             url='{0}{1}'.format(self.BASE_API_URL, api_resource),
-            headers={
-                'Authorization': 'Bearer {}'.format(self._token)
-            },
+            headers=headers,
             params=params,
             **kwargs
         )
@@ -81,3 +89,12 @@ class Category(object):
         for c in categories:
             if c['name'] == category_name:
                 return c['id']
+
+
+class Entry(object):
+    def __init__(self, client):
+        self.client = client
+
+    def create(self, json_payload):
+        return self.client._make_request(
+            '/entries', 'POST', json=json_payload)
