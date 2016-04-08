@@ -2,6 +2,10 @@ toshl-python |License MIT|
 ==========================
 
 |Travis-CI Status|
+|PyPI version|
+
+.. |PyPI version| image:: https://badge.fury.io/py/toshl.svg
+   :target: https://badge.fury.io/py/toshl
 
 Python client library for Toshl API
 
