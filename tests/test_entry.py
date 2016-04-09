@@ -13,6 +13,7 @@ class TestEntry(TestCase):
     def test_create_entry_successful(self, mock_request):
         mock_response = mock.Mock()
         mock_response.status_code = 201
+        mock_response.headers = {'Location': '/entries/1'}
         mock_request.return_value = mock_response
 
         client = ToshlClient('abcd1234')
@@ -37,4 +38,4 @@ class TestEntry(TestCase):
             },
             method='POST', params=None, url='https://api.toshl.com/entries',
             json=json_payload)
-        assert response.status_code == 201
+        assert response == '1'

@@ -58,6 +58,9 @@ class ToshlClient(object):
         if type(response) is dict:
             return [response]
 
+    def _parse_location_header(self, response):
+        return response.headers['Location'].split('/')[-1:][0]
+
 
 class Account(object):
     def __init__(self, client):
@@ -96,5 +99,7 @@ class Entry(object):
         self.client = client
 
     def create(self, json_payload):
-        return self.client._make_request(
+        response = self.client._make_request(
             '/entries', 'POST', json=json_payload)
+        if response.status_code == 201:
+            return self.client._parse_location_header(response)
