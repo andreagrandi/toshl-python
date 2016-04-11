@@ -61,7 +61,7 @@ class TestClient(TestCase):
     def test_client_request_raises_exception_on_400(self, mock_request):
         mock_response = mock.Mock()
         expected_dict = {
-            'id': 'exception_id',
+            'error_id': 'exception_id',
             'description': 'Exception description'
         }
         mock_response.json.return_value = expected_dict
@@ -83,7 +83,7 @@ class TestClient(TestCase):
             self, mock_request):
         mock_response = mock.Mock()
         expected_dict = {
-            'id': 'exception_id',
+            'error_id': 'exception_id',
             'description': 'Exception description',
             "fields": [
                 {

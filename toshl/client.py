@@ -40,7 +40,7 @@ class ToshlClient(object):
 
             raise(ToshlException(
                 status_code=response.status_code,
-                error_id=error_response['id'],
+                error_id=error_response['error_id'],
                 error_description=error_response['description'],
                 extra_info=error_response.get('fields')))
 
@@ -67,15 +67,29 @@ class Account(object):
         self.client = client
 
     def list(self):
+        """
+        Return a list of Accounts from Toshl for the current user
+        """
         response = self.client._make_request('/accounts')
         response = response.json()
         return self.client._list_response(response)
 
     def search(self, account_name):
+        """
+        Get a list of all the Accounts for the current user and return the ID
+        of the one with the specified name.
+        """
         accounts = self.list()
         for a in accounts:
             if a['name'] == account_name:
                 return a['id']
+
+    def get(self, account_id):
+        """
+        Return a specific account given its ID
+        """
+        response = self.client._make_request('/accounts/{0}'.format(account_id))
+        return response.json()
 
 
 class Category(object):
