@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='toshl',
-    version='0.0.3',
+    version='0.0.4',
     url='https://github.com/andreagrandi/toshl-python',
     download_url='https://github.com/andreagrandi/toshl-python/tarball/0.0.3',
     author='Andrea Grandi',
