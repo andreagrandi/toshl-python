@@ -183,3 +183,31 @@ class TestAccount(TestCase):
         assert ex.exception.error_id == 'error.object.not_found'
         assert ex.exception.error_description == 'Object with id 111 not found.'
         assert ex.exception.extra_info is None
+
+    @mock.patch('toshl.client.requests.request')
+    def test_create_account_successful(self, mock_request):
+        mock_response = mock.Mock()
+        mock_response.status_code = 201
+        mock_response.headers = {'Location': '/accounts/1'}
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+        account_client = Account(client)
+
+        json_payload = {
+            'name': 'Test Account',
+            'currency': {
+                'code': 'GBP'
+            }
+        }
+
+        response = account_client.create(json_payload)
+
+        mock_request.assert_called_once_with(
+            headers={
+                'Authorization': 'Bearer abcd1234',
+                'Content-Type': 'application/json'
+            },
+            method='POST', params=None, url='https://api.toshl.com/accounts',
+            json=json_payload)
+        assert response == '1'
