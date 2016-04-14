@@ -211,3 +211,35 @@ class TestAccount(TestCase):
             method='POST', params=None, url='https://api.toshl.com/accounts',
             json=json_payload)
         assert response == '1'
+
+    @mock.patch('toshl.client.requests.request')
+    def test_update_account_successful(self, mock_request):
+        json_payload = {
+            'name': 'Test Account',
+            'currency': {
+                'code': 'GBP'
+            },
+            'extra': {
+                'test': 'foo'
+            }
+        }
+
+        mock_response = mock.Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = json_payload
+        mock_response.headers = {'Location': '/accounts/1'}
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+        account_client = Account(client)
+
+        response = account_client.update('1', json_payload)
+
+        mock_request.assert_called_once_with(
+            headers={
+                'Authorization': 'Bearer abcd1234',
+                'Content-Type': 'application/json'
+            },
+            method='PUT', params=None, url='https://api.toshl.com/accounts/1',
+            json=json_payload)
+        assert response == json_payload

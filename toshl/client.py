@@ -97,6 +97,12 @@ class Account(object):
         if response.status_code == 201:
             return self.client._parse_location_header(response)
 
+    def update(self, account_id, json_payload):
+        response = self.client._make_request(
+            '/accounts/{0}'.format(account_id), 'PUT', json=json_payload)
+        if response.status_code == 200:
+            return response.json()
+
 
 class Category(object):
     def __init__(self, client):
