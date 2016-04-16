@@ -103,6 +103,10 @@ class Account(object):
         if response.status_code == 200:
             return response.json()
 
+    def delete(self, account_id):
+        return self.client._make_request(
+            '/accounts/{0}'.format(account_id), 'DELETE')
+
 
 class Category(object):
     def __init__(self, client):

@@ -243,3 +243,20 @@ class TestAccount(TestCase):
             method='PUT', params=None, url='https://api.toshl.com/accounts/1',
             json=json_payload)
         assert response == json_payload
+
+    @mock.patch('toshl.client.requests.request')
+    def test_delete_account_successful(self, mock_request):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = ''
+        mock_response.status_code = 204
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+        account = Account(client)
+        response = account.delete('1')
+
+        mock_request.assert_called_once_with(
+            headers={'Authorization': 'Bearer abcd1234'},
+            method='DELETE',
+            params=None, url='https://api.toshl.com/accounts/1')
+        assert response.json() == ''
