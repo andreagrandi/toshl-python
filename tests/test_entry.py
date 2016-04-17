@@ -1,6 +1,7 @@
 import mock
 from unittest import TestCase
-from toshl.client import ToshlClient, Entry
+from toshl.client import ToshlClient
+from toshl.entry import Entry
 
 
 class TestEntry(TestCase):

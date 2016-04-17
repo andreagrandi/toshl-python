@@ -1,6 +1,7 @@
 import mock
 from unittest import TestCase
-from toshl.client import ToshlClient, Account
+from toshl.client import ToshlClient
+from toshl.account import Account
 from toshl.exceptions import ToshlException
 
 
