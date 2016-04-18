@@ -50,3 +50,11 @@ class Account(object):
 
         return self.client._make_request(
             '/accounts/{0}/move'.format(account_id), 'POST', json=json_payload)
+
+    def reorder(self, accounts_list):
+        json_payload = {
+            'order': accounts_list
+        }
+
+        return self.client._make_request(
+            '/accounts/reorder', 'POST', json=json_payload)

@@ -286,3 +286,30 @@ class TestAccount(TestCase):
             params=None, url='https://api.toshl.com/accounts/1/move',
             json=json_payload)
         assert response.json() == ''
+
+    @mock.patch('toshl.client.requests.request')
+    def test_reorder_account_successful(self, mock_request):
+        accounts_list = ['3', '1', '2']
+
+        json_payload = {
+            'order': accounts_list
+        }
+
+        mock_response = mock.Mock()
+        mock_response.json.return_value = ''
+        mock_response.status_code = 204
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+        account = Account(client)
+        response = account.reorder(accounts_list)
+
+        mock_request.assert_called_once_with(
+            headers={
+                'Authorization': 'Bearer abcd1234',
+                'Content-Type': 'application/json'
+            },
+            method='POST',
+            params=None, url='https://api.toshl.com/accounts/reorder',
+            json=json_payload)
+        assert response.json() == ''
