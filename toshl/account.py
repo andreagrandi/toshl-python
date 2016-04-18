@@ -42,3 +42,11 @@ class Account(object):
     def delete(self, account_id):
         return self.client._make_request(
             '/accounts/{0}'.format(account_id), 'DELETE')
+
+    def move(self, account_id, position):
+        json_payload = {
+            'position': position
+        }
+
+        return self.client._make_request(
+            '/accounts/{0}/move'.format(account_id), 'POST', json=json_payload)

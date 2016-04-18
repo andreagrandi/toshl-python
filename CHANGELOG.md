@@ -8,5 +8,6 @@
 - Add create() method to Account
 - Add update() method to Account
 - Add delete() method to Account
+- Add move() method to Account
 - Add proper testing for ToshlException
 - Improve string representation of ToshlException
