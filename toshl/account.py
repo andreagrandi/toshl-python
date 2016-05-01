@@ -58,3 +58,12 @@ class Account(object):
 
         return self.client._make_request(
             '/accounts/reorder', 'POST', json=json_payload)
+
+    def merge(self, accounts_list, dest_account):
+        json_payload = {
+            'accounts': accounts_list,
+            'account': dest_account
+        }
+
+        return self.client._make_request(
+            '/accounts/merge', 'POST', json=json_payload)

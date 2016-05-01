@@ -4,7 +4,7 @@ setup(
     name='toshl',
     version='0.0.4',
     url='https://github.com/andreagrandi/toshl-python',
-    download_url='https://github.com/andreagrandi/toshl-python/tarball/0.0.3',
+    download_url='https://github.com/andreagrandi/toshl-python/tarball/0.0.4',
     author='Andrea Grandi',
     author_email='a.grandi@gmail.com',
     description='Python client library for Toshl API.',

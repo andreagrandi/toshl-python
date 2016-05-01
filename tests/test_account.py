@@ -313,3 +313,32 @@ class TestAccount(TestCase):
             params=None, url='https://api.toshl.com/accounts/reorder',
             json=json_payload)
         assert response.json() == ''
+
+    @mock.patch('toshl.client.requests.request')
+    def test_merge_account_successful(self, mock_request):
+        accounts_list = ['1', '2']
+        dest_account = '2'
+
+        json_payload = {
+            'accounts': accounts_list,
+            'account': dest_account
+        }
+
+        mock_response = mock.Mock()
+        mock_response.json.return_value = ''
+        mock_response.status_code = 204
+        mock_request.return_value = mock_response
+
+        client = ToshlClient('abcd1234')
+        account = Account(client)
+        response = account.merge(accounts_list, dest_account)
+
+        mock_request.assert_called_once_with(
+            headers={
+                'Authorization': 'Bearer abcd1234',
+                'Content-Type': 'application/json'
+            },
+            method='POST',
+            params=None, url='https://api.toshl.com/accounts/merge',
+            json=json_payload)
+        assert response.json() == ''
