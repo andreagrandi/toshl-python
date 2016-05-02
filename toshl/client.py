@@ -40,7 +40,7 @@ class ToshlClient(object):
 
             raise(ToshlException(
                 status_code=response.status_code,
-                error_id=error_response['id'],
+                error_id=error_response['error_id'],
                 error_description=error_response['description'],
                 extra_info=error_response.get('fields')))
 
@@ -60,46 +60,3 @@ class ToshlClient(object):
 
     def _parse_location_header(self, response):
         return response.headers['Location'].split('/')[-1:][0]
-
-
-class Account(object):
-    def __init__(self, client):
-        self.client = client
-
-    def list(self):
-        response = self.client._make_request('/accounts')
-        response = response.json()
-        return self.client._list_response(response)
-
-    def search(self, account_name):
-        accounts = self.list()
-        for a in accounts:
-            if a['name'] == account_name:
-                return a['id']
-
-
-class Category(object):
-    def __init__(self, client):
-        self.client = client
-
-    def list(self):
-        response = self.client._make_request('/categories')
-        response = response.json()
-        return self.client._list_response(response)
-
-    def search(self, category_name):
-        categories = self.list()
-        for c in categories:
-            if c['name'] == category_name:
-                return c['id']
-
-
-class Entry(object):
-    def __init__(self, client):
-        self.client = client
-
-    def create(self, json_payload):
-        response = self.client._make_request(
-            '/entries', 'POST', json=json_payload)
-        if response.status_code == 201:
-            return self.client._parse_location_header(response)

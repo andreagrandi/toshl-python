@@ -5,3 +5,7 @@ class ToshlException(Exception):
         self.error_id = error_id
         self.error_description = error_description
         self.extra_info = extra_info
+
+    def __str__(self):
+        return '{0} - {1}: {2}'.format(
+            self.status_code, self.error_id, self.error_description)

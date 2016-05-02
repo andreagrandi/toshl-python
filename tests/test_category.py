@@ -1,6 +1,7 @@
 import mock
 from unittest import TestCase
-from toshl.client import ToshlClient, Category
+from toshl.client import ToshlClient
+from toshl.category import Category
 
 
 class TestCategory(TestCase):
