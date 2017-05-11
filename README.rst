@@ -2,6 +2,7 @@ toshl-python |License MIT|
 ==========================
 
 |Travis-CI Status|
+|CodeCov|
 |PyPI version|
 
 .. |PyPI version| image:: https://badge.fury.io/py/toshl.svg
@@ -107,3 +108,6 @@ Copyright Note
 .. |License MIT| image:: https://go-shields.herokuapp.com/license-MIT-blue.png
 .. |Travis-CI Status| image:: https://secure.travis-ci.org/andreagrandi/toshl-python.png?branch=master
    :target: http://travis-ci.org/#!/andreagrandi/toshl-python
+
+.. |CodeCov| image:: https://codecov.io/gh/andreagrandi/toshl-python/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/andreagrandi/toshl-python
